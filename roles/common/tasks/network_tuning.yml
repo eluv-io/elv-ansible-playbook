@@ -1,0 +1,36 @@
+---
+- name: Set networking net.core.rmem_max
+  sysctl:
+      name: net.core.rmem_max
+      value: 262144000
+      sysctl_set: yes
+      state: present
+
+- name: Setting net.core.rmem_default
+  sysctl:
+    name: net.core.rmem_default
+    value: 262144000
+    sysctl_set: yes
+    state: present
+
+- name: Setting net.core.netdev_max_backlog
+  sysctl:
+    name: net.core.netdev_max_backlog
+    value: 10000
+    sysctl_set: yes
+    state: present
+
+- name: Setting net.core.default_qdisc
+  sysctl:
+    name: net.core.default_qdisc
+    value: fq
+    sysctl_set: yes
+    state: present
+
+- name: Enabling BBR
+  sysctl:
+    name: net.ipv4.tcp_congestion_control
+    value: bbr
+    sysctl_set: yes
+    state: present
+    reload: yes

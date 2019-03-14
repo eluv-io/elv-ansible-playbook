@@ -1,0 +1,11 @@
+- name: Ensure group 'eluvio' exists
+  group:
+    name: eluvio
+    state: present
+
+- name: Add the user 'eluvio'
+  user:
+    name: eluvio
+    shell: /bin/bash
+    comment: Eluvio User
+    group: eluvio

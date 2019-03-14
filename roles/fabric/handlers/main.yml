@@ -1,0 +1,8 @@
+---
+  ### Handle Fabric Start and Stop
+  - name: restart Fabric
+    service: name=qfab state=restarted
+  - name: start Fabric
+    service: name=qfab state=stopped
+  - name: stop Fabric
+    service: name=qfab state=started

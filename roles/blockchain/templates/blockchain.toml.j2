@@ -1,0 +1,12 @@
+enc_block = "{{ encoded_genesis }}"
+
+[node]
+datadir = "{{ eluvio_base_dir }}/var/{{ blockchain_network }}"
+networkid = {{ blockchain_network }} # Network identifier
+port = {{ elvmasterd_api_port }} # Network listening port
+nodiscover = true # Disables the peer discovery mechanism
+rpcaddr = "127.0.0.1" # HTTP-RPC server listening interface
+rpcport = {{ elvmasterd_rpc_port }} # HTTP-RPC server listening port
+rpccorsdomain = "*" # Comma separated list of domains from which to accept cross origin requests
+node_account = 0
+kms_account = 1

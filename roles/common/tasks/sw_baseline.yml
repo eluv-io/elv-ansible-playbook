@@ -1,0 +1,10 @@
+---
+  - name: Install common tools
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+      - jq
+      - python-apt
+      - tree

@@ -1,0 +1,6 @@
+---
+# Most of these set in the "all" group variable set.  Set here just in case.
+encoded_genesis: "H4sIAAAAAAAA/6yUwY7jNgyG30VnH0hJFKUcix5aoNc+AEWRM0aTOE0cYLaLvHuRTZsB5uTFjG6k7c//L/zk96DL0eeXsPse9FXm4+8j7BpRgjiF1+Vgl9Vk/LJf9K+wgynYfEKCj/VvcnkNuwBv8MkT/iPShz/U97p/+0eO63w9vLd0P/99tbuFk53nZTy+Oy36GnYIALfbFI7LUe2hMUxhne/O5HB6duxtPcuvssqX+CjElTRzQhZDKTVJ7lVGVuhdUstFe9WSMlVGNY5mzN7iAKOSEkMlyyly5lpHLr2iCklm7I1a5+wJOlA10CS9dEhYuWPhz+r+/AlTeJHLH/NhXn/cJCaM40d7zO6zXvfrt8eDMIXD/PaV0dFlPna52E/xwhRkv1/0Hp9YMeailkYCBzVsFs0wpYEDFB20qBD2+7td9vJ/pGRwta4kWuIDeptCYlQo3GMTHTkmZyyWU+mUnC2W6HkweNoE2xqUjzAkcRxcO1XNTxqhV+6pcR418hjeWpHoLVppualZ1BxLtU3StmZ9m7TSKXcUtuHOhj1yVmhO3qE1aFUwgVIsm6RtHZtt0qrVRndrxZpxR+bSMvoQwmYQHUrR7iNuktaKcyMrNIZ71OIZJfsYUiBKRM0yEqvjJpgQF2g0UKqwR2JyhBgrRTetgsDKWqFtgN1X5fXQ7fzcjC9y+fNi41mf5GzH9evm9vZvAAAA//9cvjDxhAYAAA=="
+blockchain_network: 955302
+elvmasterd_rpc_port: 8545
+elvmasterd_api_port: 40303

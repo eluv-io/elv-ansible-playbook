@@ -1,0 +1,11 @@
+---
+eluvio_user: eluvio
+eluvio_group: eluvio
+eluvio_base_dir: /opt/eluvio
+blockchain_network: 955302
+elvmasterd_rpc_port: 8545
+elvmasterd_api_port: 40303
+space_id: ispc3J1jEWCr6mhHv6jhYuoVYotPxAy4
+fabric_data: /var/QDATA
+
+installer_location: http://www.eluv.io/dl/ansible-poc-F8FC5F3D

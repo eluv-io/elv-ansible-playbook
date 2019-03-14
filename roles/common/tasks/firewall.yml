@@ -1,0 +1,10 @@
+---
+  - name: "Deny everything and enable UFW"
+    ufw:
+      state: enabled
+      policy: deny
+      direction: incoming
+  - name: "Enable ssh access on firewall"
+    ufw:
+      rule: allow
+      name: OpenSSH

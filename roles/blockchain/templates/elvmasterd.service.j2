@@ -1,0 +1,18 @@
+[Unit]
+Description=Eluvio elvmasterd
+After=network.target
+
+[Service]
+User={{ eluvio_user }}
+Group={{ eluvio_group }}
+EnvironmentFile={{ eluvio_base_dir }}/conf/secret.env
+Type=simple
+Restart=always
+RestartSec=30s
+
+ExecStart={{ eluvio_base_dir }}/bin/elvmasterd start \
+  --config={{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml \
+  --log-file={{ fabric_data }}/elvmasterd.log
+
+[Install]
+WantedBy=multi-user.target

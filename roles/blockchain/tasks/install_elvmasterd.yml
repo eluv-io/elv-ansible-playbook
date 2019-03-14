@@ -1,0 +1,117 @@
+---
+  - name: "Creating directories"
+    file:
+      path: "{{ item }}"
+      state: directory
+      mode: 0755
+      group: "{{ eluvio_user }}"
+      owner: "{{ eluvio_group }}"
+    with_items:
+      - "{{ eluvio_base_dir }}"
+      - "{{ eluvio_base_dir }}/var"
+      - "{{ eluvio_base_dir }}/bin"
+      - "{{ eluvio_base_dir }}/conf"
+      - "{{ eluvio_base_dir }}/var/{{ blockchain_network }}"
+      - "{{ fabric_data }}"
+
+  - name: Set Eluvio permissions
+    file:
+      path: "{{ eluvio_base_dir }}"
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      recurse: yes
+
+  - name: Generate systemd unit
+    template:
+      src: templates/elvmasterd.service.j2
+      dest: /etc/systemd/system/elvmasterd.service
+
+  - name: Generate elvmaster TOML
+    template:
+      src: templates/blockchain.toml.j2
+      dest: "{{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml"
+
+  - name: Generate secrets
+    template:
+      src: templates/secret.env.j2
+      dest: "{{ eluvio_base_dir }}/conf/secret.env"
+      mode: 0600
+      owner: root
+      group: root
+
+  - name: stop elvmasterd
+    systemd:
+      state: stopped
+      name: elvmasterd
+      daemon_reload: yes
+    failed_when: no
+
+  - name: "Extract elvmasterd into {{ eluvio_base_dir }}/bin"
+    unarchive:
+      src: "{{ installer_location }}/elv-master.tgz"
+      dest: "{{ eluvio_base_dir }}"
+      remote_src: yes
+
+  - name: Set 'elvmasterd' to executeable
+    file:
+      path: "{{ eluvio_base_dir }}/bin/elvmasterd"
+      mode: 0755
+
+  - name: Initialize elvmasterd wallet
+    become: yes
+    become_user: eluvio
+    environment:
+      HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
+      HDWALLET_MNEMONIC: "{{ mnemonic12 }}"
+      NODE_NODE_ACCOUNT: "0"
+      NODE_KMS_ACCOUNT: "1"
+      NODE_KMS_PASSPHRASE: "{{ wallet_secret }}"
+      NODE_NODE_PASSPHRASE: "{{ wallet_secret }}"
+    shell: |
+      {{ eluvio_base_dir }}/bin/elvmasterd wallet create --accounts=2 \
+      --config {{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml \
+      --log-file {{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd.log
+    args:
+      creates: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore"
+
+  - name: Initialize elvmasterd blockchain
+    become: yes
+    become_user: eluvio
+    environment:
+      HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
+      HDWALLET_MNEMONIC: "{{ mnemonic12 }}"
+      NODE_NODE_ACCOUNT: "0"
+      NODE_KMS_ACCOUNT: "1"
+      NODE_KMS_PASSPHRASE: "{{ wallet_secret }}"
+      NODE_NODE_PASSPHRASE: "{{ wallet_secret }}"
+    shell: |
+      {{ eluvio_base_dir }}/bin/elvmasterd init \
+      --config {{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml \
+      --log-file {{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd.log
+    args:
+      creates: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd"
+
+  - name: Seed the peer list
+    copy:
+      src: files/static-nodes.json
+      dest: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd/static-nodes.json"
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      mode: 0644
+
+  - name: Start elvmasterd
+    systemd:
+      state: restarted
+      name: elvmasterd
+      enabled: yes
+      daemon_reload: yes
+
+  - name: Allow access to blockchain ports
+    ufw:
+      rule: allow
+      proto: tcp
+      port: '{{ item }}'
+    with_items:
+      - "{{ elvmasterd_rpc_port }}"
+      - "{{ elvmasterd_api_port }}"
+    when: public_blockchain is defined

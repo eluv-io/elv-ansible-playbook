@@ -1,0 +1,8 @@
+---
+# This playbook deploys the whole application stack in this site.
+- name: Configure Fabric nodes
+  hosts: fabric
+  roles:
+    - common
+    - blockchain
+    - fabric

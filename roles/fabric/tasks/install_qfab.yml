@@ -1,0 +1,45 @@
+---
+  - name: "Stop service qfab"
+    systemd:
+      name: qfab
+      state: stopped
+    failed_when: no
+
+      # Presumes the qfab-installer.sh is in ~/builds
+  - name: Get qfab installer
+    get_url:
+      url: "{{ installer_location }}/qfab-installer.sh"
+      dest: /tmp/qfab-installer.sh
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      mode: 0755
+
+  - name: "Install fabric"
+    shell: |
+      bash /tmp/qfab-installer.sh -c
+
+  - name: "Installing fabric configuration"
+    template:
+      src: templates/qfab.json.j2
+      dest: "{{ eluvio_base_dir }}/conf/qfab.json"
+
+  - name: "Set network capability for Fabric"
+    capabilities:
+      path: "{{ eluvio_base_dir }}/bin/qfab"
+      capability: cap_net_bind_service=+ep
+      state: present
+
+  - name: "Start service qfab"
+    systemd:
+      name: qfab
+      state: started
+      enabled: yes
+      daemon_reload: yes
+
+  - name: Allow access to fabric port
+    ufw:
+      rule: allow
+      proto: tcp
+      port: '{{ item }}'
+    with_items:
+      - "{{ api_port }}"
