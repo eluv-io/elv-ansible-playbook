@@ -1,17 +1,29 @@
 {
-  "Xpaths": {
+{% if not_default_path is defined %}
+  "paths": {
     "install_path": "{{ eluvio_base_dir }}",
     "qparts_path": "{{ fabric_data }}/parts",
     "qtemp_path": "{{ fabric_data }}/temp",
     "qlibs_path": "{{ fabric_data }}/libs"
   },
+{% endif %}
   "fabric_store": {
     "local": {
-      "enabled": true
+      "enabled": {{ 'false' if uses_etcd is defined else 'true' }}
+  {% if uses_etcd is defined %}
+    },
+    "etcd": {
+      "enabled": true,
+      "endpoints": [
+        "localhost:2379"
+      ]
+  {% endif %}
     }
   },
   "fabric": {
-    "Xnode_id": "inodcDKJHX6PDWxTE7nrVgCjn",
+  {% if node_id is defined %}
+    "node_id": "{{ node_id }}",
+  {% endif %}
     "net": {
       "routing_protocol": {
         "type": "static_routes",
@@ -71,7 +83,11 @@
     {
       "id": "{{ space_id }}",
       "type": "Ethereum",
-      "ethereum" : {"url":"http://127.0.0.1:{{ elvmasterd_rpc_port }}", "network_id":{{ blockchain_network }}}
+      "ethereum" : {
+        "url": "http://127.0.0.1:{{ elvmasterd_rpc_port }}",
+        "private_key_file": "{{ eluvio_base_dir }}/conf/private_key",
+        "network_id":{{ blockchain_network }}
+      }
     }
   ]
 }

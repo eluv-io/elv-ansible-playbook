@@ -1,0 +1,44 @@
+---
+- name: Checking of local elvmasterd running
+  stat:
+    path: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore/"
+  register: keystore_dir
+
+- name: Finding earliest key (key 1)
+  shell: >
+    ls -rt {{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore | head -1
+  register: node_keystore_file
+  when: keystore_dir.stat.exists
+
+- name: Getting Key address
+  shell: >
+    {{ eluvio_base_dir }}/bin/qfab_cli eth decrypt
+    --keyfile {{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore/{{ node_keystore_file.stdout }}
+    --password {{ wallet_secret }} | sed 's/[^{]*//' | jq -r .address
+  register: node_key_address
+  when: keystore_dir.stat.exists
+
+- name: getting Key info
+  shell: >
+    {{ eluvio_base_dir }}/bin/qfab_cli eth decrypt
+    --keyfile {{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore/{{ node_keystore_file.stdout }}
+    --password {{ wallet_secret }} | sed 's/[^{]*//' | jq -r .privatekey
+  register: node_private_key
+  when: keystore_dir.stat.exists
+
+- name: Converting address to NodeID
+  shell: >
+    {{ eluvio_base_dir }}/bin/qfab tools format-id --type node {{ node_key_address.stdout }}
+  register: node_identity
+  when: keystore_dir.stat.exists
+
+- name: Set variables
+  set_fact:
+    pk: "{{ node_private_key.stdout }}"
+    n_address: "{{ node_key_address.stdout }}"
+    node_id: "{{ node_identity.stdout }}"
+  when: keystore_dir.stat.exists
+
+# - name: printf
+#   debug:
+#     msg: "Node Address {{ n_address }} has Node ID {{ node_id }} and Private Key {{ pk }}"

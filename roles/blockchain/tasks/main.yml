@@ -1,2 +1,5 @@
 ---
 - include: install_elvmasterd.yml
+- include: setup_wallet.yml
+- include: join_to_network.yml
+- include: finalize.yml

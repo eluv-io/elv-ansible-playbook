@@ -1,0 +1,18 @@
+---
+  - name: Initialize elvmasterd wallet
+    become: yes
+    become_user: eluvio
+    environment:
+      HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
+      HDWALLET_MNEMONIC: "{{ mnemonic12 }}"
+      NODE_NODE_ACCOUNT: "0"
+      NODE_KMS_ACCOUNT: "1"
+      NODE_KMS_PASSPHRASE: "{{ wallet_secret }}"
+      NODE_NODE_PASSPHRASE: "{{ wallet_secret }}"
+    shell: |
+      {{ eluvio_base_dir }}/bin/elvmasterd wallet create --accounts=2 \
+      --config {{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml \
+      --log-file {{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd.log
+    args:
+      creates: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/keystore"
+

@@ -1,0 +1,17 @@
+---
+  - name: Start elvmasterd
+    systemd:
+      state: restarted
+      name: elvmasterd
+      enabled: yes
+      daemon_reload: yes
+
+  - name: Allow access to blockchain ports
+    ufw:
+      rule: allow
+      proto: tcp
+      port: '{{ item }}'
+    with_items:
+      - "{{ elvmasterd_rpc_port }}"
+      - "{{ elvmasterd_api_port }}"
+    when: blockchain_listen_addr is defined

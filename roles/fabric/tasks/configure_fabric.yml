@@ -1,0 +1,13 @@
+---
+  - name: "Installing fabric configuration"
+    template:
+      src: templates/qfab.json.j2
+      dest: "{{ eluvio_base_dir }}/conf/qfab.json"
+
+  - name: "Installing fabric keys"
+    template:
+      src: templates/private_key.j2
+      dest: "{{ eluvio_base_dir }}/conf/private_key"
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      mode: 0600

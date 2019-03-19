@@ -1,4 +1,4 @@
 # Manually generated inventory of testing environment
 
 [fabric]
-example01 ansible_host=1.2.3.4 ansible_user=ansible.admin
+example01 ansible_host=IP.ADDR.DOES.HERE ansible_user=ANSIBLE.USER

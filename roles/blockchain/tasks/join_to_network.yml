@@ -1,0 +1,25 @@
+---
+  - name: Initialize elvmasterd blockchain
+    become: yes
+    become_user: eluvio
+    environment:
+      HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
+      HDWALLET_MNEMONIC: "{{ mnemonic12 }}"
+      NODE_NODE_ACCOUNT: "0"
+      NODE_KMS_ACCOUNT: "1"
+      NODE_KMS_PASSPHRASE: "{{ wallet_secret }}"
+      NODE_NODE_PASSPHRASE: "{{ wallet_secret }}"
+    shell: |
+      {{ eluvio_base_dir }}/bin/elvmasterd init \
+      --config {{ eluvio_base_dir }}/conf/{{ blockchain_network }}.toml \
+      --log-file {{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd.log
+    args:
+      creates: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd"
+
+  - name: Seed the peer list
+    copy:
+      src: files/static-nodes.json
+      dest: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd/static-nodes.json"
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      mode: 0644

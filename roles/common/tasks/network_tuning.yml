@@ -34,3 +34,12 @@
     sysctl_set: yes
     state: present
     reload: yes
+
+- name: Open up connection max on netfliter
+  sysctl:
+    name: net.netfilter.nf_conntrack_max
+    value: "{{ open_netfilter }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: open_netfilter is defined
