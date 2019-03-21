@@ -1,0 +1,16 @@
+[Unit]
+Description=Eluvio Fabric
+After=network.target
+
+[Service]
+User={{ eluvio_user }}
+Group={{ eluvio_group }}
+Type=simple
+Restart=always
+RestartSec=30s
+
+ExecStart={{ eluvio_base_dir }}/bin/qfab \
+  daemon --config {{ eluvio_base_dir }}/conf/qfab.json
+
+[Install]
+WantedBy=multi-user.target

@@ -5,21 +5,93 @@
       state: stopped
     failed_when: no
 
-      # Presumes the qfab-installer.sh is in ~/builds
-  - name: Get qfab installer
-    get_url:
-      url: "{{ installer_location }}/qfab-installer.sh"
-      dest: /tmp/qfab-installer.sh
+  - name: "Creating directories"
+    file:
+      path: "{{ item }}"
+      state: directory
+      mode: 0755
+      group: "{{ eluvio_user }}"
+      owner: "{{ eluvio_group }}"
+    with_items:
+      - "{{ eluvio_base_dir }}"
+      - "{{ eluvio_base_dir }}/var"
+      - "{{ eluvio_base_dir }}/bin"
+      - "{{ eluvio_base_dir }}/conf"
+      - "{{ eluvio_base_dir }}/lib"
+      - "{{ fabric_data }}"
+
+  - name: Install video sw and libs
+    apt:
+      name: "{{ packages }}"
+      update_cache: yes
+    vars:
+      packages:
+        - zlib1g
+        - libc6
+        - libtinfo5
+        - libstdc++6
+        - libgcc1
+        - libmp3lame0
+        - libx264-152
+        - libxvidcore4
+        - libva2
+        - libxv1
+        - libx11-6
+        - libxext6
+        - libxcb1
+        - libxcb-shm0
+        - libxcb-shape0
+        - libxcb-xfixes0
+        - libasound2
+        - libsdl2-2.0-0
+        - libsndio6.1
+        - libfribidi0
+        - libva2
+        - ocl-icd-libopencl1
+        - libfontconfig1
+        - libfreetype6
+        - libva2
+        - libva-drm2
+        - libva-x11-2
+        - libx11-6
+        - libvdpau1
+        - ocl-icd-libopencl1
+
+  - name: Generate systemd unit
+    template:
+      src: templates/qfab.service.j2
+      dest: /etc/systemd/system/qfab.service
+
+  - name: "Extract qfab into {{ eluvio_base_dir }}"
+    unarchive:
+      src: "{{ installer_location }}/qfab-archive.tgz"
+      dest: "{{ eluvio_base_dir }}"
       owner: "{{ eluvio_user }}"
       group: "{{ eluvio_group }}"
-      mode: 0755
+      remote_src: yes
 
-  - name: "Install fabric"
-    shell: |
-      bash /tmp/qfab-installer.sh -c
+  - name: "Setup ldconfig for {{ eluvio_base_dir }}/lib"
+    shell: "/sbin/ldconfig {{ eluvio_base_dir }}/lib"
+    args:
+      warn: False
+
+  - name: Set 'qfab*' to executeable
+    file:
+      path: "{{ item }}"
+      mode: 0755
+    with_items:
+      - "{{ eluvio_base_dir }}/bin/qfab"
+      - "{{ eluvio_base_dir }}/bin/qfab_cli"
 
   - name: "Set network capability for Fabric"
     capabilities:
       path: "{{ eluvio_base_dir }}/bin/qfab"
       capability: cap_net_bind_service=+ep
       state: present
+
+  - name: Set Eluvio permissions
+    file:
+      path: "{{ eluvio_base_dir }}"
+      owner: "{{ eluvio_user }}"
+      group: "{{ eluvio_group }}"
+      recurse: yes

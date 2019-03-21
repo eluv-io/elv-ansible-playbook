@@ -8,4 +8,4 @@ elvmasterd_api_port: 40303
 space_id: ispc2kM5HbMjvTMiN3hzPHENUgug1fSu
 fabric_data: /var/QDATA
 
-installer_location: http://www.eluv.io/dl/ansible-poc-F8FC5F3D
+installer_location: https://storage.googleapis.com/f3fb0a59e8df4d63b597486e95ca14bc/ansible
