@@ -1,0 +1,35 @@
+---
+- name: "Set hard/nproc for {{ eluvio_user }}"
+  pam_limits:
+    domain: "{{ eluvio_user }}"
+    limit_type: hard
+    limit_item: nproc
+    value: 250000
+
+- name: "Set soft/nproc for {{ eluvio_user }}"
+  pam_limits:
+    domain: "{{ eluvio_user }}"
+    limit_type: soft
+    limit_item: nproc
+    value: 250000
+
+- name: "Set hard/nofile for {{ eluvio_user }}"
+  pam_limits:
+    domain: "{{ eluvio_user }}"
+    limit_type: hard
+    limit_item: nofile
+    value: 250000
+
+- name: "Set soft/nofile for {{ eluvio_user }}"
+  pam_limits:
+    domain: "{{ eluvio_user }}"
+    limit_type: soft
+    limit_item: nofile
+    value: 250000
+
+- name: "Set hard/nice for {{ eluvio_user }}"
+  pam_limits:
+    domain: "{{ eluvio_user }}"
+    limit_type: hard
+    limit_item: nice
+    value: 0

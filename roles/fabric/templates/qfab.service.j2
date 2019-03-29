@@ -6,6 +6,8 @@ After=network.target
 User={{ eluvio_user }}
 Group={{ eluvio_group }}
 Type=simple
+LimitCORE=500000
+LimitNOFILE=500000
 Restart=always
 RestartSec=30s
 

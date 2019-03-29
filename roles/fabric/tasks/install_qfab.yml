@@ -64,7 +64,7 @@
 
   - name: "Extract qfab into {{ eluvio_base_dir }}"
     unarchive:
-      src: "{{ installer_location }}/qfab-archive.tgz"
+      src: "{{ installer_location }}/{{ qfab_tgz }}"
       dest: "{{ eluvio_base_dir }}"
       owner: "{{ eluvio_user }}"
       group: "{{ eluvio_group }}"

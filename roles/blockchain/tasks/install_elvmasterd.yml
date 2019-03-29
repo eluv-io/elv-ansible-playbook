@@ -48,7 +48,7 @@
 
   - name: "Extract elvmasterd into {{ eluvio_base_dir }}/bin"
     unarchive:
-      src: "{{ installer_location }}/elv-master.tgz"
+      src: "{{ installer_location }}/{{ elvmasterd_tgz }}"
       dest: "{{ eluvio_base_dir }}"
       remote_src: yes
 

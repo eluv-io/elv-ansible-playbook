@@ -3,6 +3,7 @@
 - name: Configure Fabric nodes
   hosts: fabric
   roles:
+    - baseline
     - common
     - blockchain
     - fabric

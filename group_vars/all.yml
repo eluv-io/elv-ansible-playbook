@@ -9,3 +9,5 @@ space_id: ispc2kM5HbMjvTMiN3hzPHENUgug1fSu
 fabric_data: /var/QDATA
 
 installer_location: https://storage.googleapis.com/f3fb0a59e8df4d63b597486e95ca14bc/ansible
+elvmasterd_tgz: elvmasterd-b8ee72-dev-apr7-exec.tgz
+qfab_tgz: qfab-9095f6cd-master.tgz

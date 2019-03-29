@@ -43,3 +43,21 @@
     state: present
     reload: yes
   when: open_netfilter is defined
+
+- name: Increase the SYN max connection
+  sysctl:
+    name: net.core.somaxconn
+    value: "{{ maxconn_value }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: maxconn_value is defined
+
+- name: Increase SYN backlog
+  sysctl:
+    name: net.ipv4.tcp_max_syn_backlog
+    value: "{{ syn_backlog_value }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: syn_backlog_value is defined
