@@ -1,9 +1,15 @@
 ---
+- name: Setup baseline
+  hosts: all
+  gather_facts: no
+  roles:
+    - baseline
+
 # This playbook deploys the whole application stack in this site.
 - name: Configure Fabric nodes
   hosts: fabric
+  gather_facts: no
   roles:
-    - baseline
     - common
     - blockchain
     - fabric

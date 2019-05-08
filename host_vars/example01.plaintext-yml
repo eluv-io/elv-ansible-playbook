@@ -1,0 +1,6 @@
+# This is a plaintext version of the host_var file for the given example.  This can be used as is
+# once renamed to hostname.yml.  It is recommended that a `ansible-vault` is used to 
+# create/edit the yml file to protect the secrets
+---
+mnemonic12: "acquire tissue fence stay symptom toy balance hold brain brief inform will"
+wallet_secret: "test_password_change_me_please"

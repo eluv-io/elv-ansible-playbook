@@ -5,7 +5,8 @@
       policy: deny
       direction: incoming
 
-  - name: "Enable ssh (as defined in /etc/services) access on firewall"
+  - name: "Enable ssh access on firewall"
     ufw:
       rule: allow
-      port: ssh
+      port: "{{ item }}"
+    loop: "{{ ssh_ports }}"

@@ -10,20 +10,20 @@
   "fabric_store": {
     "local": {
       "enabled": {{ 'false' if uses_etcd is defined else 'true' }}
-  {% if uses_etcd is defined %}
+{% if uses_etcd is defined %}
     },
     "etcd": {
       "enabled": true,
       "endpoints": [
         "localhost:2379"
       ]
-  {% endif %}
+{% endif %}
     }
   },
   "fabric": {
-  {% if node_id is defined %}
+{% if node_id is defined %}
     "node_id": "{{ node_id }}",
-  {% endif %}
+{% endif %}
     "net": {
       "routing_protocol": {
         "type": "static_routes",
@@ -83,6 +83,14 @@
     {
       "id": "{{ space_id }}",
       "type": "Ethereum",
+{% if uses_etcd is defined %}
+      "etcd": {
+        "enabled": true,
+        "endpoints": [
+          "localhost:2379"
+        ]
+      },
+{% endif %}
       "ethereum" : {
         "url": "http://127.0.0.1:{{ elvmasterd_rpc_port }}",
         "private_key_file": "{{ eluvio_base_dir }}/conf/private_key",

@@ -3,8 +3,8 @@ Description=Eluvio elvmasterd
 After=network.target
 
 [Service]
-User={{ eluvio_user }}
-Group={{ eluvio_group }}
+User={{ elvmasterd_user }}
+Group={{ elvmasterd_group }}
 EnvironmentFile={{ eluvio_base_dir }}/conf/secret.env
 Type=simple
 Restart=always

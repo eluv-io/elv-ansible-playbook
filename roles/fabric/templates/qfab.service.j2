@@ -3,13 +3,13 @@ Description=Eluvio Fabric
 After=network.target
 
 [Service]
-User={{ eluvio_user }}
-Group={{ eluvio_group }}
+User={{ fabric_user }}
+Group={{ fabric_group }}
 Type=simple
 LimitCORE=500000
 LimitNOFILE=500000
 Restart=always
-RestartSec=30s
+RestartSec=2s
 
 ExecStart={{ eluvio_base_dir }}/bin/qfab \
   daemon --config {{ eluvio_base_dir }}/conf/qfab.json

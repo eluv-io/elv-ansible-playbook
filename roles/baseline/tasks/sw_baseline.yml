@@ -1,4 +1,12 @@
 ---
+  - name: Enable universe repository
+    apt_repository:
+      repo: "{{ item }}"
+    loop:
+      - "deb http://archive.ubuntu.com/ubuntu/ bionic universe"
+      - "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"
+      - "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"
+
   - name: Install common tools
     apt:
       name: "{{ packages }}"
@@ -7,3 +15,9 @@
       packages:
       - jq
       - tree
+      - vim
+
+  - name: Set VIM as default editor
+    alternatives:
+      name: editor
+      path: /usr/bin/vim.basic

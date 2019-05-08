@@ -1,0 +1,10 @@
+---
+space_id: ispc3J1jEWCr6mhHv6jhYuoVYotPxAy4
+open_netfilter: 1048576
+maxconn_value: 262144
+syn_backlog_value: 262144
+blockchain_listen_addr: 0.0.0.0
+elvmasterd_user: eluvio
+elvmasterd_group: eluvio
+fabric_user: eluvio
+fabric_group: eluvio

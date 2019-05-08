@@ -8,6 +8,6 @@
     template:
       src: templates/private_key.j2
       dest: "{{ eluvio_base_dir }}/conf/private_key"
-      owner: "{{ eluvio_user }}"
-      group: "{{ eluvio_group }}"
+      owner: "{{ fabric_user }}"
+      group: "{{ fabric_group }}"
       mode: 0600
