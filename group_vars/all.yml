@@ -1,13 +1,13 @@
 ---
-eluvio_user: eluvio
-eluvio_group: eluvio
 eluvio_base_dir: /opt/eluvio
-blockchain_network: 955302
+blockchain_network: 955303
 elvmasterd_rpc_port: 8545
 elvmasterd_api_port: 40303
-space_id: ispc2kM5HbMjvTMiN3hzPHENUgug1fSu
 fabric_data: /var/QDATA
-
 installer_location: https://storage.googleapis.com/f3fb0a59e8df4d63b597486e95ca14bc/ansible
-elvmasterd_tgz: elvmasterd-b8ee72-dev-apr7-exec.tgz
-qfab_tgz: qfab-9095f6cd-master.tgz
+elvmasterd_tgz: elvmasterd-56dad7-dev-apr7.tgz
+qfab_tgz: qfab-4a5a1c-dev-apr7.tgz
+encoded_genesis: H4sIAAAAAAAA/6yTu67bMAyG34WzB90oyRmLDi3QtQ9AUVQi1LfGDpDTg7x74ZM0B8jkIuFG2vrEX/z5DjwOpe5h9w58oDp8z7BrEa2yDRzGXuZFKH/pRv4FO9WA1Emjesy/0XyAHaizejLgRsSHG+Jnnt7+0LDUU/9Z4q7+PskqYZJjHfP13DTyAXZaKXW5NDCMA8u1R2hgqasy6qd7Rc7Lkb7SQi/R4TFEZBesDiSafLTkUqTsWKVEtnWeU2RvHcagWYIRCaG0JitBb21QEcVZE1yIMTufomZCckGnFtsUXLEqKYyi2FLySVkdQ9I+PNv38wEN7Gn+Ufu6fLykttrkj3KupVQ+dcvb9QM00NfzK63DYx0SzfJfPGiAum7k1T5bx7H+m6ijf5YyWnt0GFEpNNrEG/nSwFYjbCdutcJ2YutLaFE85lyKYV+cJldyJq8MGc2Osg1c9CORcoiSGIm9ucHWRTv1SY73vdrT/HOWfM8nOsqwvG7ql78BAAD//xenRRTCBAAA
+
+ssh_ports:
+  - 22

@@ -1,7 +1,7 @@
 ---
   - name: Initialize elvmasterd blockchain
     become: yes
-    become_user: eluvio
+    become_user: "{{ elvmasterd_user }}"
     environment:
       HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
       HDWALLET_MNEMONIC: "{{ mnemonic12 }}"
@@ -16,10 +16,11 @@
     args:
       creates: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd"
 
+  # Will move this to dynamically created
   - name: Seed the peer list
     copy:
-      src: files/static-nodes.json
+      src: "files/static-nodes_{{ blockchain_network }}.json"
       dest: "{{ eluvio_base_dir }}/var/{{ blockchain_network }}/elvmasterd/static-nodes.json"
-      owner: "{{ eluvio_user }}"
-      group: "{{ eluvio_group }}"
+      owner: "{{ elvmasterd_user }}"
+      group: "{{ elvmasterd_group }}"
       mode: 0644

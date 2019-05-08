@@ -1,0 +1,6 @@
+---
+- name: update fabric
+  hosts: fabric
+  gather_facts: no
+  roles:
+    - fabric

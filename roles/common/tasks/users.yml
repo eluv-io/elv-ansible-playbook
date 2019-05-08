@@ -1,11 +1,20 @@
-- name: Ensure group 'eluvio' exists
+- name: Ensure group exists
   group:
-    name: eluvio
+    name: "{{ item }}"
     state: present
+  loop:
+    - "{{ fabric_group }}"
+    - "{{ elvmasterd_group }}"
+  when: item is defined
 
-- name: Add the user 'eluvio'
+- name: Add the service users
   user:
-    name: eluvio
+    name: "{{ item.user }}"
     shell: /bin/bash
-    comment: Eluvio User
-    group: eluvio
+    group: "{{ item.group }}"
+    state: present
+  loop:
+    - { user: "{{ fabric_user }}", group: "{{ fabric_group }}" }
+    - { user: "{{ elvmasterd_user }}", group: "{{ elvmasterd_group }}" }
+  when: item.user is defined
+

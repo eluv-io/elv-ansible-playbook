@@ -3,3 +3,4 @@
 - include: blockchain_facts.yml
 - include: configure_fabric.yml
 - include: finalize_fabric.yml
+- include: fabric_facts.yml

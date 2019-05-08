@@ -1,0 +1,9 @@
+---
+- name: Getting Fabric Version
+  shell: |
+    {{ eluvio_base_dir }}/bin/qfab -v | cut -d ' ' -f 5 | cut -d@ -f 2
+  register: fabric_revision
+
+- name: Set variables
+  set_fact:
+    qfab_rev: "{{ fabric_revision.stdout }}"

@@ -1,0 +1,6 @@
+---
+- name: Baseline Systems
+  hosts: all
+  gather_facts: no
+  roles:
+    - baseline

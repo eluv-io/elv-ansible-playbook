@@ -1,7 +1,7 @@
 ---
   - name: Initialize elvmasterd wallet
     become: yes
-    become_user: eluvio
+    become_user: "{{ elvmasterd_user }}"
     environment:
       HDWALLET_PASSPHRASE: "{{ wallet_secret }}"
       HDWALLET_MNEMONIC: "{{ mnemonic12 }}"

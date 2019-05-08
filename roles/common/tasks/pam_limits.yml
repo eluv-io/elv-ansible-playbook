@@ -1,35 +1,50 @@
 ---
-- name: "Set hard/nproc for {{ eluvio_user }}"
+- name: "Set hard/nproc for pam limit"
   pam_limits:
-    domain: "{{ eluvio_user }}"
+    domain: "{{ item }}"
     limit_type: hard
     limit_item: nproc
     value: 250000
+  loop:
+    - "{{ fabric_user }}"
+    - "{{ elvmasterd_user }}"
 
-- name: "Set soft/nproc for {{ eluvio_user }}"
+- name: "Set soft/nproc for pam limit"
   pam_limits:
-    domain: "{{ eluvio_user }}"
+    domain: "{{ item }}"
     limit_type: soft
     limit_item: nproc
     value: 250000
+  loop:
+    - "{{ fabric_user }}"
+    - "{{ elvmasterd_user }}"
 
-- name: "Set hard/nofile for {{ eluvio_user }}"
+- name: "Set hard/nofile for pam limit"
   pam_limits:
-    domain: "{{ eluvio_user }}"
+    domain: "{{ item }}"
     limit_type: hard
     limit_item: nofile
     value: 250000
+  loop:
+    - "{{ fabric_user }}"
+    - "{{ elvmasterd_user }}"
 
-- name: "Set soft/nofile for {{ eluvio_user }}"
+- name: "Set soft/nofile for pam limit"
   pam_limits:
-    domain: "{{ eluvio_user }}"
+    domain: "{{ item }}"
     limit_type: soft
     limit_item: nofile
     value: 250000
+  loop:
+    - "{{ fabric_user }}"
+    - "{{ elvmasterd_user }}"
 
-- name: "Set hard/nice for {{ eluvio_user }}"
+- name: "Set hard/nice for pam limit"
   pam_limits:
-    domain: "{{ eluvio_user }}"
+    domain: "{{ item }}"
     limit_type: hard
     limit_item: nice
     value: 0
+  loop:
+    - "{{ fabric_user }}"
+    - "{{ elvmasterd_user }}"

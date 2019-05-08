@@ -10,8 +10,8 @@
       path: "{{ item }}"
       state: directory
       mode: 0755
-      group: "{{ eluvio_user }}"
-      owner: "{{ eluvio_group }}"
+      group: "{{ fabric_user }}"
+      owner: "{{ fabric_group }}"
     with_items:
       - "{{ eluvio_base_dir }}"
       - "{{ eluvio_base_dir }}/var"
@@ -66,8 +66,8 @@
     unarchive:
       src: "{{ installer_location }}/{{ qfab_tgz }}"
       dest: "{{ eluvio_base_dir }}"
-      owner: "{{ eluvio_user }}"
-      group: "{{ eluvio_group }}"
+      owner: "{{ fabric_user }}"
+      group: "{{ fabric_group }}"
       remote_src: yes
 
   - name: "Setup ldconfig for {{ eluvio_base_dir }}/lib"
@@ -92,6 +92,6 @@
   - name: Set Eluvio permissions
     file:
       path: "{{ eluvio_base_dir }}"
-      owner: "{{ eluvio_user }}"
-      group: "{{ eluvio_group }}"
+      owner: "{{ fabric_user }}"
+      group: "{{ fabric_group }}"
       recurse: yes
